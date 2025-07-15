@@ -26,13 +26,14 @@ A modern, responsive web application for user authentication and directory searc
 
 ## Tech Stack
 
-- **Frontend Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
+- **Frontend Framework**: React 19 with TypeScript
+- **Build Tool**: Vite 7
+- **Styling**: Tailwind CSS 4
 - **Form Management**: React Hook Form with Yup validation
 - **HTTP Client**: Axios
-- **Icons**: Lucide React
+- **Icons**: Lucide React & Heroicons
 - **Date Handling**: date-fns
+- **UI Components**: Headless UI
 
 ## Getting Started
 
@@ -82,6 +83,9 @@ This frontend integrates with the following API endpoints:
 ### User Search
 - `GET /users/search` - Advanced user search with filters
 
+### User Management
+- `PUT /users/profile` - Update user profile information
+
 ### Required API Response Format
 
 **Authentication Response:**
@@ -113,28 +117,43 @@ This frontend integrates with the following API endpoints:
 }
 ```
 
+**User Update Response:**
+```json
+{
+  "user": {
+    "id": "uuid",
+    "email": "user@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    // ... other updated user fields
+  },
+  "message": "Profile updated successfully"
+}
+```
+
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── auth/           # Authentication components
-│   ├── layout/         # Layout components
-│   ├── search/         # User search components
-│   └── ui/            # Reusable UI components
-├── context/           # React context providers
-├── services/          # API service functions
-├── types/            # TypeScript type definitions
+│   ├── auth/           # Authentication components (LoginForm, RegisterForm)
+│   ├── layout/         # Layout components (AuthLayout, Navbar)
+│   ├── profile/        # Profile components (ProfileForm)
+│   ├── search/         # User search components (SearchFilters, UserCard, UserSearch)
+│   └── ui/            # Reusable UI components (Button, Input, Select)
+├── context/           # React context providers (AuthProvider, authContext)
+├── hooks/            # Custom React hooks (useAuth)
+├── services/          # API service functions (api.ts)
+├── types/            # TypeScript type definitions (index.ts)
 └── App.tsx           # Main application component
 ```
 
 ## Available Scripts
 
 - `npm run dev` - Start development server
-- `npm run build` - Build for production
+- `npm run build` - Build for production (includes TypeScript compilation)
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript type checking
 
 ## Features Overview
 
@@ -149,6 +168,11 @@ src/
 - Real-time search results
 - Responsive user cards
 - Pagination for large result sets
+
+### Profile Management
+- User profile viewing and editing
+- Profile form with validation
+- Personal information management
 
 ### Responsive Design
 - Mobile-first approach

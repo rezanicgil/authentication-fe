@@ -38,13 +38,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
                     Search Users
                   </Button>
                   
-                  <button
+                  <Button
+                    variant={currentPage === 'profile' ? 'primary' : 'ghost'}
                     onClick={() => onNavigate('profile')}
-                    className="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900 cursor-pointer transition-colors"
+                    icon={User}
                   >
-                    <User className="h-4 w-4" />
-                    <span>{user?.firstName} {user?.lastName}</span>
-                  </button>
+                    {user?.firstName} {user?.lastName}
+                  </Button>
                   
                   <Button
                     variant="outline"

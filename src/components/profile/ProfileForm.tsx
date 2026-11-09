@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { User, Save } from 'lucide-react';
@@ -97,8 +98,9 @@ const ProfileForm: React.FC = () => {
       const response = await userApi.updateProfile(profileData);
       updateUser(response.user);
       setSuccessMessage('Profile updated successfully!');
-    } catch (error: any) {
-      setApiError(error.response?.data?.message || 'Failed to update profile');
+    } catch (error) {
+      const message = isAxiosError(error) ? error.response?.data?.message : undefined;
+      setApiError(typeof message === 'string' && message ? message : 'Failed to update profile');
     } finally {
       setIsLoading(false);
     }

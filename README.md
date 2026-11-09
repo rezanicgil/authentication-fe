@@ -8,7 +8,7 @@ A modern, responsive web application for user authentication and directory searc
   - User registration with form validation
   - Secure login with JWT token management
   - Persistent authentication state
-  - Automatic token refresh handling
+  - Bearer token attached to API requests
 
 - **Advanced User Search**
   - Search by name or email
@@ -23,6 +23,20 @@ A modern, responsive web application for user authentication and directory searc
   - Clean, professional interface
   - Loading states and error handling
   - Accessible form components
+
+## Architecture and trade-offs
+
+The [NestJS account service](https://github.com/rezanicgil/authentication-kafka) handles authentication, filtering and persistence.
+
+```mermaid
+flowchart LR
+  Forms[Registration and profile forms] --> API[Axios client]
+  Directory[Search filters and pagination] --> API
+  API --> Service[NestJS account service]
+  Service --> DB[(PostgreSQL)]
+```
+
+Filters travel in the query string and the API returns a page of results. Session data persists across reloads in browser local storage, where scripts on the same origin can read it. Use synthetic accounts for the demo. The client has no refresh-token flow.
 
 ## Tech Stack
 
@@ -39,20 +53,20 @@ A modern, responsive web application for user authentication and directory searc
 
 ### Prerequisites
 
-- Node.js 16 or higher
+- Node.js 20.19+ on the 20.x line, or 22.12+
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/rezanicgil/authentication-fe.git
 cd authentication-fe
 ```
 
 2. Install dependencies:
 ```bash
-npm install
+npm ci
 ```
 
 3. Set up environment variables:
@@ -181,6 +195,8 @@ src/
 - Cross-browser compatibility
 
 ## Contributing
+
+There is no frontend test runner. Run `npm run lint` and `npm run build` for static checks. To check the integration locally, register a synthetic user, update the profile and search for the updated account with the backend running.
 
 1. Fork the repository
 2. Create a feature branch
